@@ -1,10 +1,13 @@
-import 'dotenv/config';
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { RecipesModule } from './recipes/recipes.module';
+import { UsersController } from './users/users.controller';
+import { UsersService } from './users/users.service';
+import { UsersModule } from './users/users.module';
+import 'dotenv/config';
+
 
 const username = process.env.MONGO_USERNAME;
 const password = process.env.MONGO_PASSWORD;
@@ -16,6 +19,7 @@ const password = process.env.MONGO_PASSWORD;
       { useNewUrlParser: true, useUnifiedTopology: true },
     ),
     RecipesModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
