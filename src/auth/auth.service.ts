@@ -2,24 +2,25 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
-import { User } from './user.model';
+import { User } from '../types/user';
+import { RegisterDTO, LoginDTO } from './auth.dto';
 
 @Injectable()
-export class UsersService {
+export class AuthService {
   constructor(@InjectModel('User') private readonly userModel: Model<User>) {}
 
-  async register(data: User) {
-    const user = new this.userModel(data);
-    return await user.save();
+  async create(userDTO: RegisterDTO) {
+    const createdUser = new this.userModel(userDTO);
+    return await createdUser.save();
   }
 
-  async login(data: User) {
-    const { email, password } = data;
+  async findByLogin(userDTO: LoginDTO) {
+    const { email, password } = userDTO;
     return await this.userModel.findOne({ email, password });
   }
 
   // TODO this method is for development only, remove later
-  async showAll() {
+  async findAll() {
     return await this.userModel.find().exec();
   }
 }
