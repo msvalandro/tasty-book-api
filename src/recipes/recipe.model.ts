@@ -5,7 +5,7 @@ export const RecipeSchema = new mongoose.Schema({
   description: { type: String, required: true },
 });
 
-export interface Recipe {
+export interface Recipe extends mongoose.Document {
   id: string;
   title: string;
   description: string;
